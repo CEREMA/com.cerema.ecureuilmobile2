@@ -1,0 +1,26 @@
+<ons-page id="VMain">
+
+    <ons-toolbar>
+        <div class="center">Ecureuil</div>
+    </ons-toolbar>
+
+    <ons-tabbar swipeable position="auto">
+        <ons-tab page="view/VTab1/VTab1.html" label="Accueil" icon="ion-home" active>
+        </ons-tab>
+        <ons-tab page="view/VTab2/VTab2.html" label="Recherche" icon="ion-search">
+        </ons-tab>
+        <ons-tab page="view/VTab3/VTab3.html" label="Favoris" icon="ion-star">
+        </ons-tab>
+        <ons-tab page="view/VTabPreferences/VTabPreferences.html" label="Paramètres" icon="md-settings">
+        </ons-tab>
+    </ons-tabbar>
+
+    <ons-modal direction="up">
+        <div style="text-align: center">
+            <p>
+                <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Chargement en cours...
+            </p>
+        </div>
+    </ons-modal>
+
+</ons-page>

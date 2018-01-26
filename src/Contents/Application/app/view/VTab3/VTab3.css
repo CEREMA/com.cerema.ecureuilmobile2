@@ -1,0 +1,88 @@
+#VTab3 .logo {
+    width: 99%;
+    height: 70px;
+    border: 1px solid black;
+}
+
+#VTab3 .objet {
+    margin-top: 5px;
+}
+
+#VTab3 .l1 {
+    background-image: url(img/default.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#VTab3 .l2 {
+    background-image: url(img/boamp.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#VTab3 .l3 {
+    background-image: url(img/lemoniteur.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#VTab3 .l4 {
+    background-image: url(img/jal.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#VTab3 .l5 {
+    background-image: url(img/joue.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#VTab3 .button-success,
+#VTab3 .button-error,
+#VTab3 .button-warning,
+#VTab3 .button-secondary {
+    color: white;
+    float: left;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    font-size: 70%;
+}
+
+#VTab3 .button-success {
+    background: rgb(28, 184, 65);
+    /* this is a green */
+}
+
+#VTab3 .button-error {
+    background: rgb(202, 60, 60);
+    /* this is a maroon */
+}
+
+#VTab3 .button-warning {
+    background: rgb(223, 117, 20);
+    /* this is an orange */
+}
+
+#VTab3 .button-secondary {
+    background: rgb(66, 184, 221);
+    /* this is a light blue */
+}
+
+#VTab3 .star0 {
+    background-image: url(img/star0.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 23px;
+    float: right;
+}
+
+#VTab3 .star {
+    background-image: url(img/star.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 23px;
+    float: right;
+}

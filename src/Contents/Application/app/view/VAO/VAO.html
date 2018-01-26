@@ -1,0 +1,19 @@
+<ons-page id="VAO">
+    <ons-toolbar>
+        <div class="center">Appels d'offres</div>
+        <div class="left">
+            <ons-back-button id="closebutton"></ons-back-button>
+        </div>
+    </ons-toolbar>
+    <ons-list>
+        <ons-list-header><data id="domaine" /></ons-list-header>
+        <ons-lazy-repeat id="AOList"></ons-lazy-repeat>
+    </ons-list>
+    <ons-modal direction="up">
+        <div style="text-align: center">
+            <p>
+                <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Chargement en cours...
+            </p>
+        </div>
+    </ons-modal>
+</ons-page>

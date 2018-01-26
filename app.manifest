@@ -1,0 +1,129 @@
+{
+    "namespace": "com.cerema.ecureuilmobile2",
+    "git": "",
+    "title": "Ecureuil",
+    "description": "Gestion des appels d'offres",
+    "platform": "mobile",
+    "uid": "BkZGCXVbG",
+    "version": "0.0.1",
+    "build": "0",
+    "copyright": "Copyright (c) 2017 CEREMA/DTerMed",
+    "license": "BSD3",
+    "author": {
+        "name": "Stéphane Zucatti",
+        "mail": "stephane.zucatti@me.com",
+        "twitter": "@mydearsz",
+        "web": "",
+        "github": ""
+    },
+    "team": {
+        "debugger": [],
+        "tester": []
+    },
+    "langs": [
+        "en-US",
+        "fr-FR"
+    ],
+    "paths": {
+        "@omneedia": "/cdn",
+        "@cdnjs": "https://cdnjs.cloudflare.com/ajax/libs",
+        "Contents": "Contents/Application/app",
+        "Lib": "Contents/Application/app/libraries"
+    },
+    "frameworks": [
+        {
+            "name": "JQUERY",
+            "version": "3.2.1",
+            "src": [
+                "@omneedia/ajax/libs/jquery/{version}/jquery.js"
+            ],
+            "res": [],
+            "i18n": []
+        },
+        {
+            "name": "TinderCard",
+            "version": "1.0.0",
+            "src": [
+                "@omneedia/ajax/libs/jquery.transform2d.js",
+                "@omneedia/ajax/libs/jquery.jTinder/{version}/jquery.jTinder.js"
+            ],
+            "res": [],
+            "i18n": []
+        },
+        {
+            "name": "ONSENUI",
+            "version": "2.8.3",
+            "src": [
+                "@omneedia/ajax/libs/setImmediate/1.0.5/setImmediate.js",
+                "@cdnjs/onsen/{version}/js/onsenui.js"
+            ],
+            "res": [
+                "@cdnjs/onsen/{version}/css/onsenui.css",
+                "@cdnjs/onsen/{version}/css/onsen-css-components.css"
+            ],
+            "i18n": []
+        },
+        {
+            "name": "OMNEEDIA",
+            "version": "0.9.0",
+            "src": [
+                "@omneedia/ajax/libs/setImmediate/1.0.5/setImmediate.js",
+                "@omneedia/ajax/libs/socket.io/2.0.3/socket.io.js",
+                "@omneedia/ajax/libs/alasql/0.4.4/alasql.min.js",
+                "@omneedia/omneedia/{version}/utils.modules.js",
+                "@omneedia/omneedia/{version}/app.js",
+                "@omneedia/omneedia/{version}/mobile.modules.js"
+            ],
+            "res": [
+                "@omneedia/ajax/libs/animate.css/3.5.2/animate.css",
+                "@omneedia/omneedia/{version}/res/mobile.css",
+                "Contents/Resources/mobile.css"
+            ],
+            "i18n": [
+                "@omneedia/omneedia/{version}/libs/Date/date-{lang}.js",
+                "@omneedia/omneedia/{version}/i18n/{lang}.json"
+            ]
+        }
+    ],
+    "auth": [],
+    "controllers": [
+        "CMain"
+    ],
+    "modules": [],
+    "plugins": [
+        "cordova-plugin-whitelist",
+        "cordova-plugin-device",
+        "cordova-plugin-whitelist",
+	    "cordova-sqlite-storage",
+        "cordova-plugin-statusbar",
+        "cordova-plugin-globalization",
+        "cordova-plugin-network-information",
+        "cordova-plugin-document-viewer",
+        "cordova-plugin-dialogs",
+        "cordova-plugin-file",
+        "cordova-plugin-file-transfer",
+        "cordova-plugin-openfilenative"
+    ],
+    "api": [
+        "MyService@ecureuilmobile",
+        "AO@ecureuil",
+        "Feed@ecureuil",
+        "MyService"
+    ],
+    "db": [
+        "gestionao2"
+    ],
+    "packages": [],
+    "icon": {
+        "background": "#FF0000",
+        "file": "app.png"
+    },
+    "splashscreen": {
+        "background": "#FFFFFF",
+        "color": "red",
+        "file": "app.png"
+    },
+    "server": {
+        "port": 3030
+    }
+}
