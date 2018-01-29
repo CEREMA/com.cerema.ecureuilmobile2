@@ -76,7 +76,7 @@ App.viewController.define('VTab3', {
                 var response = data.items.query('select _BLOB from ? where IdAppelOffre=' + id);
                 if (response.length == 0) return alert('Le document est introuvable');
                 response = JSON.parse(response[0]._BLOB);
-                var url = 'http://ecureuil.applications.siipro.fr/docs/' + response[0].docId;
+                var url = 'http://ecureuil.applications.siipro.fr/docs/' + response[0].docId + '.pdf';
                 var filename = response[0].filename;
                 var modal = App.$('ons-modal');
                 if (device.platform == "Android") {

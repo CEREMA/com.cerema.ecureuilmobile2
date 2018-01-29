@@ -78,12 +78,14 @@ App.viewController.define('VTab2', {
             }
         });
         App.$('.pure-button').on('click', function(event) {
-            var id = event.target.id.split('idao')[1];
 
-            var response = data.items.query('select _BLOB from ? where IdAppelOffre=' + id);
+            var id = event.target.id.split('dao')[1];
+
+
+            var response = data.query('select _BLOB from ? where IdAppelOffre=' + id);
             if (response.length == 0) return alert('Le document est introuvable');
             response = JSON.parse(response[0]._BLOB);
-            var url = 'http://ecureuil.applications.siipro.fr/docs/' + response[0].docId;
+            var url = 'http://ecureuil.applications.siipro.fr/docs/' + response[0].docId + '.pdf';
             var filename = response[0].filename;
             var modal = App.$('ons-modal');
             if (device.platform == "Android") {

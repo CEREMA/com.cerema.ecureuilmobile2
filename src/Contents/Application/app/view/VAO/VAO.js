@@ -65,17 +65,42 @@ App.viewController.define('VAO', {
         AOList.refresh();
 
         App.$('.pure-button').on('click', function(event) {
+
             var id = event.target.id.split('dao')[1];
             var response = data.items.query('select _BLOB from ? where IdAppelOffre=' + id);
             if (response.length == 0) return alert('Le document est introuvable');
             response = JSON.parse(response[0]._BLOB);
-            var url = 'http://ecureuil.applications.siipro.fr/docs/' + response[0].docId;
+            var url = 'http://ecureuil.applications.siipro.fr/docs/' + response[0].docId + '.pdf';
             var filename = response[0].filename;
             var modal = App.$('ons-modal');
             if (device.platform == "Android") {
                 window.openFileNative.open(url);
             }
             if (device.platform == "iOS") {
+                function errorHandler(err) {
+                    console.log(err);
+                };
+
+                //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+                function writeToFile(filename, data, callback) {
+                    fs.root.getFile(filename, { create: true }, function(fileEntry) {
+                        fileEntry.createWriter(function(writer) {
+                            writer.onwriteend = function(e) {
+                                //we've truncated the file, now write the data
+                                writer.onwriteend = function(e) {
+                                    callback();
+                                }
+                                var blob = new Blob([data]);
+                                writer.write(blob);
+                            };
+                            writer.truncate(0);
+                        }, errorHandler);
+                    }, errorHandler);
+                };
+                writeToFile('toto.txt', 'titi', function() {
+                    alert('bidon');
+                })
+                return;
                 App.file.load(url, function(error, response) {
                     console.log(error);
                     console.log(response);
