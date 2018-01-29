@@ -5,7 +5,7 @@
     "description": "Gestion des appels d'offres",
     "platform": "mobile",
     "uid": "BkZGCXVbG",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "build": "0",
     "copyright": "Copyright (c) 2017 CEREMA/DTerMed",
     "license": "BSD3",
