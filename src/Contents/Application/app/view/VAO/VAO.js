@@ -74,7 +74,8 @@ App.viewController.define('VAO', {
             var filename = response[0].filename;
             var modal = App.$('ons-modal');
             if (device.platform == "Android") {
-                window.openFileNative.open(url);
+                //window.openFileNative.open(url);
+                window.open('http://docs.google.com/viewer?url=' + url, '_system', 'location=yes');
             }
             if (device.platform == "iOS") {
                 function errorHandler(err) {

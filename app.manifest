@@ -5,7 +5,7 @@
     "description": "Gestion des appels d'offres",
     "platform": "mobile",
     "uid": "BkZGCXVbG",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "build": "0",
     "copyright": "Copyright (c) 2017 CEREMA/DTerMed",
     "license": "BSD3",
@@ -102,7 +102,8 @@
         "cordova-plugin-dialogs",
         "cordova-plugin-file",
         "cordova-plugin-file-transfer",
-        "cordova-plugin-openfilenative"
+        "cordova-plugin-openfilenative",
+        "cordova-plugin-inappbrowser"
     ],
     "api": [
         "MyService@ecureuilmobile",

@@ -80,7 +80,8 @@ App.viewController.define('VTab3', {
                 var filename = response[0].filename;
                 var modal = App.$('ons-modal');
                 if (device.platform == "Android") {
-                    window.openFileNative.open(url);
+                    //window.openFileNative.open(url);
+                    window.open('http://docs.google.com/viewer?url=' + url, '_system', 'location=yes');
                 }
                 if (device.platform == "iOS") {
                     App.file.load(url, function(error, response) {
