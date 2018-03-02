@@ -25,31 +25,12 @@
         "fr-FR"
     ],
     "paths": {
-        "@omneedia": "http://cdn.omneedia.com",
+        "@omneedia": "/cdn",
         "@cdnjs": "https://cdnjs.cloudflare.com/ajax/libs",
         "Contents": "Contents/Application/app",
         "Lib": "Contents/Application/app/libraries"
     },
     "frameworks": [
-        {
-            "name": "JQUERY",
-            "version": "3.2.1",
-            "src": [
-                "@omneedia/ajax/libs/jquery/{version}/jquery.js"
-            ],
-            "res": [],
-            "i18n": []
-        },
-        {
-            "name": "TinderCard",
-            "version": "1.0.0",
-            "src": [
-                "@omneedia/ajax/libs/jquery.transform2d.js",
-                "@omneedia/ajax/libs/jquery.jTinder/{version}/jquery.jTinder.js"
-            ],
-            "res": [],
-            "i18n": []
-        },
         {
             "name": "ONSENUI",
             "version": "2.8.3",
@@ -67,6 +48,8 @@
             "name": "OMNEEDIA",
             "version": "0.9.0",
             "src": [
+                "https://cdn.jsdelivr.net/npm/vue",
+                "https://unpkg.com/vue-onsenui@2.5.0/dist/vue-onsenui.js",
                 "@omneedia/ajax/libs/setImmediate/1.0.5/setImmediate.js",
                 "@omneedia/ajax/libs/socket.io/2.0.3/socket.io.js",
                 "@omneedia/ajax/libs/alasql/0.4.4/alasql.min.js",
@@ -103,7 +86,9 @@
         "cordova-plugin-file",
         "cordova-plugin-file-transfer",
         "cordova-plugin-openfilenative",
-        "cordova-plugin-inappbrowser"
+        "cordova-plugin-inappbrowser",
+        "cordova-plugin-file-opener2",
+        "cordova-plugin-keyboard"
     ],
     "api": [
         "MyService@ecureuilmobile",
@@ -125,6 +110,6 @@
         "file": "app.png"
     },
     "server": {
-        "port": 3030
+        "port": 3000
     }
 }

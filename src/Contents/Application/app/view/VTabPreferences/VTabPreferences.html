@@ -1,6 +1,13 @@
 <ons-page id="VTabPreferences">
     <ons-list id="preferences">
         <ons-list-header>Démarrage</ons-list-header>
+        <ons-list-item v-for="pref in prefs">
+            <div class="left">{{pref.icon}}</div>
+            <div class="center">{{pref.title}}</div>
+            <div class="right">
+                <ons-switch :checked="pref.checked" v-on:change="checkboxVal($event.value,pref.id)"></ons-switch>
+            </div>
+        </ons-list-item>
     </ons-list>
 
     <section style="padding: 8px">

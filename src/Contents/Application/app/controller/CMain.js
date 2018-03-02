@@ -24,10 +24,13 @@ App.controller.define('CMain', {
 
     },
     VMain_onshow: function() {
+
         App.key.set('first_time', 2);
+
         if (!App.key.get('settings')) {
             var settings = {};
             App.key.set('settings', {});
+
         } else var settings = App.key.get('settings');
 
         if (!App.key.get('AUTH')) {
@@ -35,13 +38,15 @@ App.controller.define('CMain', {
             return;
         };
 
-        if ((!settings.tinder) || (settings.tinder == 1)) {
-            if (App.key.get('Tinder').length > 0) {
-                if (App.key.get('lastpage') != "tinder") {
-                    App.navigator.pushPage('view/VTinder/VTinder.html', { animation: "lift" });
-                    return;
+        if (settings.tinder) {
+            if (App.key.get('Tinder')) {
+                if (App.key.get('Tinder').length > 0) {
+                    if (App.key.get('lastpage') != "tinder") {
+                        App.navigator.pushPage('view/VTinder/VTinder.html', { animation: "lift" });
+                        return;
+                    }
                 }
-            }
+            } else App.key.set('Tinder', []);
         };
 
         var modal = App.$('ons-modal');
@@ -91,26 +96,10 @@ App.controller.define('CMain', {
             App.key.set('update', App.key.get('AOKeys')[App.key.get('AOKeys').length - 1]);
 
             modal.hide();
+
             App.key.set('first_timer', 2);
 
         });
-        /*
-                db = window.sqlitePlugin.openDatabase({ name: 'demo.db', location: 'default' });
-                db.sqlBatch([
-                    'CREATE TABLE IF NOT EXISTS DemoTable (name, score)', ['INSERT INTO DemoTable VALUES (?,?)', ['Alice', 101]],
-                    ['INSERT INTO DemoTable VALUES (?,?)', ['Betty', 202]],
-                ], function() {
-                    console.log('Populated database OK');
-                }, function(error) {
-                    console.log('SQL batch ERROR: ' + error.message);
-                });
-
-                db.executeSql('SELECT count(*) AS mycount FROM DemoTable', [], function(rs) {
-                    console.log('Record count (expected to be 2): ' + rs.rows.item(0).mycount);
-                }, function(error) {
-                    console.log('SELECT SQL statement ERROR: ' + error.message);
-                });
-        */
 
 
 

@@ -1,4 +1,18 @@
 <ons-page id="VTab3">
     <ons-list id="ListFavorites">
+        <ons-card v-for="ao in AO" :key="ao.IdAppelOffre">
+            <div class="logo" :class="thClassValue(ao.IdSource)"></div>
+            <div class="objet"><b>{{ao.Objet}}</b></div>
+            <br><small>{{ao.Observation}}</small>
+            <br>&nbsp;<br><button v-on:click="getDoc(ao.IdAppelOffre,$event)" class="button-success pure-button">Document</button> &nbsp;
+            <div class="favorites" v-on:click="Favorites(ao.IdAppelOffre,$event)" :class="Star(ao.star)"></div>
+        </ons-card>
     </ons-list>
+    <ons-modal direction="up">
+        <div style="text-align: center">
+            <p>
+                <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Chargement en cours...
+            </p>
+        </div>
+    </ons-modal>
 </ons-page>

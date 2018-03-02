@@ -2,9 +2,26 @@
     <p style="text-align: center; margin-top: 5px;margin-bottom:0px">
         <ons-search-input id="Search" placeholder="Recherche" style="width:95%"></ons-search-input>
         <br>&nbsp;<br>
-        <ons-list-header>Domaines</ons-list-header>
-        <ons-list id="SearchDomaines">
-        </ons-list>
+        <ons-list-header>Résultats</ons-list-header>
+        <section>
+            <ons-list id="SearchList">
+                <span v-if="AO.length>0" class="label">{{total}} résultats (25 affichés)</span>
+                <v-ons-card v-for="ao in AO">
+                    <div class="logo" :class="thClassValue(ao.IdSource)"></div>
+                    <div class="objet"><b>{{ao.Objet}}</b></div>
+                    <br><small>{{ao.Observation}}</small>
+                    <br>&nbsp;<br><button v-on:click="getDoc(ao.IdAppelOffre,$event)" class="button-success pure-button">Document</button> &nbsp;
+                    <div class="favorites" v-on:click="Favorites(ao.IdAppelOffre,$event)" :class="Star(ao.star)"></div>
+                </v-ons-card>
+            </ons-list>
+        </section>
     </p>
     <p id="SEARCH" style="margin:0px;padding:0px"></p>
+    <ons-modal direction="up">
+        <div style="text-align: center">
+            <p>
+                <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Chargement en cours...
+            </p>
+        </div>
+    </ons-modal>
 </ons-page>

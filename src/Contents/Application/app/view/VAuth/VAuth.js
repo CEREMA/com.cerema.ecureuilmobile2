@@ -19,7 +19,7 @@ App.viewController.define('VAuth', {
             App.DB.post('gestionao2://mobile', [{
                 MobileId: App.key.get('keycode')
             }], function(r) {
-                var IO = new App.IO('http://ecureuil.applications.siipro.fr');
+                var IO = new App.IO('https://ecureuil.applications.siipro.fr');
                 IO.on('connect', function() {
                     console.log('connected.');
                     IO.subscribe('#' + App.key.get('keycode'));

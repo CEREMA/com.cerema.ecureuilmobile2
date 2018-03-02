@@ -4,6 +4,7 @@
         <ons-list-header>Ca vient d'arriver !</ons-list-header>
         <ons-list-item id="qdn" tappable>Quoi de neuf ?</ons-list-item>
         <ons-list-header>Domaines</ons-list-header>
+        <ons-list-item v-on:click="domain_click(domain.id_domaine)" tappable modifier="chevron" v-for="domain in domains" :key="domain.id_domaine">{{domain.nom_domaine}}</ons-list-item>
     </ons-list>
 
 </ons-page>

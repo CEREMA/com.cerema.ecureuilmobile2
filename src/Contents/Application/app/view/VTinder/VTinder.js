@@ -1,72 +1,72 @@
 App.viewController.define('VTinder', {
 
     require: [
-        "api.ecureuil.Feed"
+
     ],
 
     init: function() {
-
         this.control({
             'view': {
                 show: this.TinderShow
             },
-            '#closebutton': {
-                click: function(e) {
-                    App.key.set('lastpage', 'tinder');
-                    App.navigator.popPage({ animation: "lift" });
+            '#tinder-container': {
+                data: {
+                    ao: []
+                },
+                updated: this.updated,
+                methods: {
+                    Logo: this.logo
                 }
+            },
+            '#closebutton': {
+                click: this.closeme
             }
         });
-
+    },
+    logo: function(id) {
+        return value = 'l' + id;
+    },
+    closeme: function() {
+        App.key.set('lastpage', 'tinder');
+        App.navigator.popPage({ animation: "lift" });
+    },
+    updated: function() {
+        var buddies = App.$(".buddy").dom();
+        buddies[0].style.display = "block";
+        var MOVE = [];
+        for (var i = 0; i < buddies.length; i++) {
+            MOVE[i] = new Hammer(buddies[i]);
+            MOVE[i].on("swipeleft", function(ev) {
+                App.$(ev.target).up('.buddy').addClass('rotate-right').delay(200).fadeOut(300);
+                if (App.$(ev.target).is(':last-child')) {
+                    App.$('.buddy:nth-child(1)').removeClass('rotate-left').removeClass('rotate-right').fadeIn(300);
+                } else {
+                    try {
+                        App.$(ev.target).up('.buddy').next().removeClass('rotate-left').removeClass('rotate-right').fadeIn(400);
+                    } catch (e) {
+                        App.key.set('lastpage', 'tinder');
+                        App.navigator.popPage({ animation: "lift" });
+                    }
+                }
+            });
+            MOVE[i].on("swiperight", function(ev) {
+                App.$(ev.target).up('.buddy').addClass('rotate-left').delay(200).fadeOut(300);
+                if (App.$(ev.target).is(':last-child')) {
+                    App.$('.buddy:nth-child(1)').removeClass('rotate-left').removeClass('rotate-right').fadeIn(300);
+                } else {
+                    try {
+                        App.$(ev.target).up('.buddy').next().removeClass('rotate-left').removeClass('rotate-right').fadeIn(400);
+                    } catch (e) {
+                        App.key.set('lastpage', 'tinder');
+                        App.navigator.popPage({ animation: "lift" });
+                    }
+                }
+            });
+        }
     },
     TinderShow: function(me) {
         App.key.set('first_timer', 2);
-        var ul = App.$("#TinderUL");
-
-        var data = App.key.get('AO').query('select * from ? where IdAppelOffre in (' + App.key.get('Tinder').join(',') + ')');
-
-        var tpl = [
-            '<li id="TIN{IdAppelOffre}" class="pane">',
-            '<div class="logo l{IdSource}"></div>',
-            '<div class="objetT"><b>{Objet}</b></div>',
-            '<br><small>{Observation}</small>',
-            '</li>'
-        ];
-
-        var item = tpl.render(data);
-        App.$(item).appendTo(ul);
-
-        $("#tinderslide").jTinder({
-            onDislike: function(item) {
-                item = item[0].id.split('TIN')[1];
-                var tinder = App.key.get('Tinder').remove(item * 1);
-                console.log(tinder);
-                App.key.set('Tinder', tinder);
-                if (App.key.get('Tinder').length == 0) {
-                    App.key.set('lastpage', 'tinder');
-                    App.navigator.popPage({ animation: "lift" });
-                }
-            },
-            onLike: function(item) {
-                item = item[0].id.split('TIN')[1];
-                var fav = App.key.get('Favorites');
-                if (fav.indexOf(item) == -1) {
-                    fav.push(item);
-                };
-                App.key.set('Favorites', fav);
-                var tinder = App.key.get('Tinder').remove(item * 1);
-                App.key.set('Tinder', tinder);
-                if (App.key.get('Tinder').length == 0) {
-                    App.key.set('lastpage', 'tinder');
-                    App.navigator.popPage({ animation: "lift" });
-                }
-            },
-            animationRevertSpeed: 200,
-            animationSpeed: 400,
-            threshold: 1,
-            likeSelector: '.like',
-            dislikeSelector: '.dislike'
-        });
+        App.control['#tinder-container'].ao = App.key.get('AO').query('select * from ? where IdAppelOffre in (' + App.key.get('Tinder').join(',') + ')');
     }
 
 });

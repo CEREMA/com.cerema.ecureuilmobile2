@@ -1,4 +1,5 @@
 <ons-page id="VTinder">
+
     <ons-toolbar>
         <div class="center">Quoi de neuf ?</div>
         <div class="right">
@@ -7,16 +8,13 @@
             </ons-toolbar-button>
         </div>
     </ons-toolbar>
-    <div id="tinderslide">
-        <ul id="TinderUL">
-
-        </ul>
+    <div id="tinder-container">
+        <div class="buddy" v-for="(AO,index) in ao" :key="AO.IdAppelOffre">
+            <div class="ttinder">
+                <div class="logo" :class="Logo(AO.IdSource)"></div>
+                <div class="objetT"><b>{{AO.Objet}}</b></div>
+                <br><small>{{AO.Observation}}</small>
+            </div>
+        </div>
     </div>
-    <template id="toto">
-        <li class="pane{i}">
-            <div class="logo l{IdSource}"></div>
-            <div class="objet"><b>{Objet}</b></div>
-            <br><small>{obs}</small>
-        </li>
-    </template>
 </ons-page>

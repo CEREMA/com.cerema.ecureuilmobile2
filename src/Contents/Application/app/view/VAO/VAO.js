@@ -8,7 +8,103 @@ App.viewController.define('VAO', {
 
         this.control({
             'view': {
-                show: this.onShow
+                show: this.onShow,
+                hide: this.onHide
+            },
+            '#AOList': {
+                data: {
+                    AO: [],
+                    domaine: ""
+                },
+                methods: {
+
+                    thClassValue: function(id) {
+                        return value = 'l' + id;
+                    },
+                    Star: function(star) {
+                        if (star) return "star";
+                        else return "star0";
+                    },
+                    Favorites: function(id, event) {
+                        var fav = App.key.get('Favorites');
+                        if (fav.indexOf(id) == -1) {
+                            App.$(event.target).removeClass('star0').addClass('star');
+                            fav.push(id);
+                            App.key.set('Favorites', fav);
+                        } else {
+                            App.$(event.target).removeClass('star').addClass('star0');
+                            fav.remove(id);
+                            App.key.set('Favorites', fav);
+                        };
+                    },
+                    getDoc: function(id, event) {
+                        var modal = App.$('ons-modal');
+                        modal.show();
+                        var fileTransfer = new FileTransfer();
+                        if (device.platform == "iOS") {
+                            var store = cordova.file.dataDirectory;
+                        } else {
+                            var store = cordova.file.externalDataDirectory;
+                        }
+
+                        var response = App.key.get('AO').query('select _BLOB from ? where IdAppelOffre=' + id);
+                        response = JSON.parse(response[0]._BLOB);
+                        if (response.length == 0) {
+                            return false;
+                        };
+                        response = response[0];
+
+                        var filename = response.filename;
+
+                        fileTransfer.download(encodeURI('https://ecureuil.applications.siipro.fr/docs/' + response.docId + '.pdf'), store + filename, function(entry) {
+
+                            var onShow = function() {
+                                modal.hide();
+                            };
+                            var onClose = function() {
+                                window.resolveLocalFileSystemURL(store, function(dir) {
+                                    dir.getFile(filename, {
+                                        create: false
+                                    }, function(entry) {
+                                        entry.remove(function() {
+
+                                        });
+                                    }, null, null);
+                                });
+                            };
+                            var onMissingApp = function(appId, installer) {
+                                modal.hide();
+                                if (confirm("Voulez vous installer un visualisateur de PDF pour Android?")) {
+                                    installer();
+                                }
+                            };
+                            var onError = function(err) {
+                                modal.hide();
+                                alert("Le document n'existe pas.");
+                            };
+
+                            // Options de config pour la methode viewDocument.
+                            var options = {
+                                title: "-",
+                                email: {
+                                    enabled: true
+                                },
+                                print: {
+                                    enabled: true
+                                },
+                                openWith: {
+                                    enabled: true
+                                },
+                                search: {
+                                    enabled: true
+                                }
+                            };
+
+                            SitewaertsDocumentViewer.viewDocument("file://" + store + filename, "application/pdf", options, onShow, onClose, onMissingApp, onError);
+                        });
+
+                    }
+                }
             },
             '#closebutton': {
                 click: function(e) {
@@ -18,148 +114,20 @@ App.viewController.define('VAO', {
         });
 
     },
+    onHide: function() {
+        App.control['#AOList'].AO = [];
+    },
     onShow: function(me) {
 
         var data = me.target.data;
         var dta = me.target.querySelectorAll('data');
         data.domaine = data.items[0].nom_domaine;
-        for (var i = 0; i < dta.length; i++) {
-            if (dta[i].getAttribute('id')) dta[i].outerHTML = data[dta[i].getAttribute('id')];
-            if (dta[i].getAttribute('store')) {
-                var sto = me.target.data[dta[i].getAttribute('store')];
-                var tpl = dta[i].getAttribute('tpl');
-                for (var j = 0; j < sto.length; j++) {
-                    App.$('<ons-list-item></ons-list-item>').appendTo(dta[i]);
-                }
-            }
+        var data = App.key.get('AO').query('SELECT * FROM ? WHERE id_domaine=' + data.items[0].id_domaine);
+        for (var i = 0; i < data.length; i++) {
+            if (App.key.get('Favorites').indexOf(data[i].IdAppelOffre) != -1) data[i].star = true;
         };
-        var AOList = App.$('#AOList').dom();
-        AOList.delegate = {
-            createItemContent: function(i) {
-                var obs = "";
-
-                if (data.items[i].Observation) obs = data.items[i].Observation;
-                var cls = "star0";
-                var tab = App.key.get('Favorites');
-
-                var favorites = App.key.get('Favorites');
-
-                if (favorites.indexOf(data.items[i].IdAppelOffre.toString()) > -1) {
-                    cls = "star";
-                };
-                var tpl = [
-                    '<ons-card>',
-                    '<div class="logo l' + data.items[i].IdSource + '"></div>',
-                    '<div class="objet"><b>' + data.items[i].Objet + '</b></div>',
-                    '<br><small>' + obs + '</small>',
-                    '<br>&nbsp;<br><button id="dao' + data.items[i].IdAppelOffre + '" class="button-success pure-button">Document</button>',
-                    '&nbsp;<div id="idao' + data.items[i].IdAppelOffre + '" class="favorites ' + cls + '"></div>',
-                    '</ons-card>'
-                ];
-                return ons.createElement(tpl.join(''));
-            },
-            countItems: function() {
-                return data.items.length;
-            }
-        };
-        AOList.refresh();
-
-        App.$('.pure-button').on('click', function(event) {
-
-            var id = event.target.id.split('dao')[1];
-            var response = data.items.query('select _BLOB from ? where IdAppelOffre=' + id);
-            if (response.length == 0) return alert('Le document est introuvable');
-            response = JSON.parse(response[0]._BLOB);
-            var url = 'http://ecureuil.applications.siipro.fr/docs/' + response[0].docId + '.pdf';
-            var filename = response[0].filename;
-            var modal = App.$('ons-modal');
-            if (device.platform == "Android") {
-                //window.openFileNative.open(url);
-                window.open('http://docs.google.com/viewer?url=' + url, '_system', 'location=yes');
-            }
-            if (device.platform == "iOS") {
-                function errorHandler(err) {
-                    console.log(err);
-                };
-
-                //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-                function writeToFile(filename, data, callback) {
-                    fs.root.getFile(filename, { create: true }, function(fileEntry) {
-                        fileEntry.createWriter(function(writer) {
-                            writer.onwriteend = function(e) {
-                                //we've truncated the file, now write the data
-                                writer.onwriteend = function(e) {
-                                    callback();
-                                }
-                                var blob = new Blob([data]);
-                                writer.write(blob);
-                            };
-                            writer.truncate(0);
-                        }, errorHandler);
-                    }, errorHandler);
-                };
-                writeToFile('toto.txt', 'titi', function() {
-                    alert('bidon');
-                })
-                return;
-                App.file.load(url, function(error, response) {
-                    console.log(error);
-                    console.log(response);
-
-                    //var entry = this.result;
-                    // Options de config pour la methode viewDocument.
-                    var options = {
-                        title: "Appel d'offre",
-                        email: {
-                            enabled: true
-                        },
-                        print: {
-                            enabled: true
-                        },
-                        openWith: {
-                            enabled: true
-                        },
-                        search: {
-                            enabled: true
-                        }
-                    };
-                    var onShow = function() {
-
-                    };
-                    var onClose = function() {
-
-                    };
-                    var onMissingApp = function() {
-
-                    };
-                    var onError = function() {
-
-                    };
-                    modal.hide();
-                    // Plugin pour ouvrire les pdf native IOS.
-                    SitewaertsDocumentViewer.viewDocument(response.nativeURL, "application/pdf", options, onShow, onClose, onMissingApp, onError);
-                });
-            };
-
-        });
-        App.$('.favorites').on('click', function(event) {
-            if (App.$(event.target).dom().outerHTML.indexOf('star0') > -1) {
-                App.$(event.target).removeClass('star0').addClass('star');
-                var id = event.target.id.split('idao')[1];
-                var tab = App.key.get('Favorites');
-                if (tab.indexOf(id) == -1) tab.push(id);
-                App.key.set('Favorites', tab);
-            } else {
-                var id = event.target.id.split('idao')[1];
-                var tab = App.key.get('Favorites');
-                var index = tab.indexOf(id);
-                console.log(index);
-                tab.splice(index, 1);
-                console.log(tab);
-                App.key.set('Favorites', tab);
-                App.$(event.target).removeClass('star').addClass('star0');
-            }
-        });
+        App.control['#AOList'].AO = data;
+        App.control['#AOList'].domaine = data[0].nom_domaine;
 
     }
 });

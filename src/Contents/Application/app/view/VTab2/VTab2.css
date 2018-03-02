@@ -86,3 +86,11 @@
     height: 23px;
     float: right;
 }
+
+#VTab2 .label {
+    font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
