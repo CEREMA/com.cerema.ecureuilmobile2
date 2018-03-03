@@ -75,6 +75,7 @@
     "modules": [],
     "plugins": [
         "cordova-plugin-whitelist",
+        "cordova-plugin-splashscreen",
         "cordova-plugin-device",
         "cordova-plugin-whitelist",
 	    "cordova-sqlite-storage",
@@ -84,11 +85,6 @@
         "cordova-plugin-document-viewer",
         "cordova-plugin-dialogs",
         "cordova-plugin-file",
-        "cordova-plugin-file-transfer",
-        "cordova-plugin-openfilenative",
-        "cordova-plugin-inappbrowser",
-        "cordova-plugin-file-opener2",
-        "cordova-plugin-keyboard"
     ],
     "api": [
         "MyService@ecureuilmobile",
